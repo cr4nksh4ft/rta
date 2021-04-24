@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+Input Page
+{% endblock title %}
+{% block body %}
+<h1>Input Page</h1>
+<form class="input_form" action="input_form" method="post" id="input_form">
+  {% csrf_token %}
+<div class="mb-3">
+<label for="exampleFormControlInput1" class="form-label">Source:</label>
+<input type="text" name="source" class="form-control" id="source" placeholder="Source">
+</div>
+<div id="mb-3">
+<p>
+<input type="button" value="Create Destination" onclick="createNewElement();"/>
+</p>
+</div>
+
+<div id="mb-3"><p>Destinations:</p></div>
+
+<div id="mylocation">
+<p><input type='text' class='form-control' id='1' name='1' placeholder='Destination' style="display: none ;"></p>
+<p><input type='text' class='form-control' id='2' name='2' placeholder='Destination' style="display: none ;"></p>
+<p><input type='text' class='form-control' id='3' name='3' placeholder='Destination' style="display: none ;"></p>
+<p><input type='text' class='form-control' id='4' name='4' placeholder='Destination' style="display: none ;"></p>
+<p><input type='text' class='form-control' id='5' name='5' placeholder='Destination' style="display: none ;"></p>
+</div>
+
+
+<script type="text/JavaScript">
+  var count=0
+function createNewElement() {
+count=count+1
+// First create a DIV element.
+//var txtNewInputBox = document.createElement('div');
+
+// Then add the content (a new input box) of the element.
+//txtNewInputBox.innerHTML = "<p><input type='text' class='form-control' id='des' placeholder='Destination'></p>";
+
+// Finally put it where it is supposed to appear.
+//document.body.appendChild(txtNewInputBox);
+var x = document.getElementById(count);;
+
+x.style.display = "block";
+
+
+document.getElementById('input_form').action = 'input_form/count='+count;
+}
+
+</script>
+<button type="submit" form="input_form" id="submit" value="Submit">Submit</button>
+
+
+</form>
+
+{% endblock body %}
