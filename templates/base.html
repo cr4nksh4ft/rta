@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <link rel="icon" type="image/jpg" href="../sttic/RTA.jpg">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -12,9 +13,13 @@
       {% block title %}
       {% endblock title %} | RTA
     </title>
+    {% block head %}
+    {% endblock head %}
   </head>
-  <body>
-    <header class="p-3 bg-dark text-white">
+  <body class="text-center">
+
+
+    <!-- <header class="p-3 bg-dark text-white">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -22,22 +27,59 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-        <li><a href="input_form" class="nav-link px-2 text-white">Input</a></li>
+        <li><a href="{% url 'home' %}" class="nav-link px-2 text-secondary">Home</a></li>
+
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'user_logout' %}" class="nav-link px-2 text-white">Logout</a></li>
+        <li><a href="{% url 'input' %}" class="nav-link px-2 text-white">Input</a></li>
+        
+        
+        {% else %}
+        <li><a href="{% url 'user_login' %}"class="nav-link px-2 text-white" >LogIn</a></li>
+        <li><a href="{% url 'user_signup' %}" class="nav-link px-2 text-white">SignUp</a></li>
+        <li><a href="{% url 'user_rp' %}" class="nav-link px-2 text-white">Reset Password</a></li>
+        {% endif %}
+        
+        
+        
       </ul>
 
 
-
       <div class="text-end float-right">
-        <button type="button" class="btn btn-outline-light me-2">Login</button>
-        <button type="button" class="btn btn-warning">Sign-up</button>
+        
+        
+        
       </div>
     </div>
   </div>
-</header>
-<script>
-    alert('{{ message }}');
-</script>
+</header> -->
+
+
+ <nav class="navbar navbar-expand-lg bg-dark text-white" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="{% url 'home' %}">Road Trip Analysis</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_logout' %}">Logout</a></li>
+                        <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'input' %}">Input</a></li>
+                        {% else %}
+                        
+                        <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_login' %}">Login</a></li>
+                        <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_signup' %}">Signup</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_rp' %}">Reset Password</a></li>
+                        {% endif %}
+                    
+                      </ul>
+                </div>
+            </div>
+        </nav>
+
+
 {% block body %} {% endblock body %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

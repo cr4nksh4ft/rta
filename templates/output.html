@@ -2,6 +2,122 @@
 {% block title %}
 Output Page
 {% endblock title %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+<link rel="stylesheet" type="text/css" href="../static/demo.css" />
+<link rel="stylesheet" type="text/css" href="styles.css" />
+<link rel="stylesheet" type="text/css" href="../template.css" />
+<script type="text/javascript" src='../test-credentials.js'></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+{% endblock head %}
+
 {% block body %}
-Hello world
+
+<div class="page-header">
+    <h1>Safest And Shortest Route On The Map</h1>
+    </div>
+
+
+<div id="map" style="  margin: auto;"></div>
+<script type="text/javascript" >
+/**
+ * Adds a polyline between Dublin, London, Paris and Berlin to the map
+ *
+ * @param  {H.Map} map      A HERE Map instance within the application
+ */
+var coord = {{coord |safe}};
+
+function addPolylineToMap(map) {
+  var lineString = new H.geo.LineString();
+  var i;
+  for (i = 0; i < coord.length; i++) {
+
+  lineString.pushPoint({lat:coord[i][0], lng:coord[i][1]});
+
+  }
+  map.addObject(new H.map.Polyline(
+    lineString, { style: { lineWidth: 4 }}
+  ));
+}
+
+/**
+*CODE BELOW FOR marker
+*/
+var waycoord = {{waycoord |safe}};
+var weather = {{weather |safe}};
+function addMarkerToGroup(group, coordinate, html) {
+  var marker = new H.map.Marker(coordinate);
+  // add custom data to the marker
+  marker.setData(html);
+  group.addObject(marker);
+// making map zoom
+    map.getViewModel().setLookAtData({
+   bounds: group.getBoundingBox()
+   });
+}
+
+function addInfoBubble(map) {
+  var group = new H.map.Group();
+
+  map.addObject(group);
+
+  // add 'tap' event listener, that opens info bubble, to the group
+  group.addEventListener('tap', function (evt) {
+    // event target is the marker itself, group is a parent event target
+    // for all objects that it contains
+    var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
+      // read custom data
+      content: evt.target.getData()
+    });
+    // show info bubble
+    ui.addBubble(bubble);
+  }, false);
+  var i;
+  for (i = 0; i < waycoord.length; i++){
+  addMarkerToGroup(group, {lat:waycoord[i][0], lng:waycoord[i][1]},
+    '<div>'+weather[i]+'</div>');
+
+          }
+  }
+
+/**
+ * Boilerplate map initialization code starts below:
+ */
+
+//Step 1: initialize communication with the platform
+// In your own code, replace variable window.apikey with your own apikey
+var platform = new H.service.Platform({
+  apikey: "p__kC0MQHcBh2N5-J5g2YUHKWH6Cu2ydGGsau2R86KQ"
+});
+var defaultLayers = platform.createDefaultLayers();
+
+//Step 2: initialize a map - this map is centered over Europe
+var center = parseInt(coord.length/2)
+var map = new H.Map(document.getElementById('map'),
+  defaultLayers.vector.normal.map,{
+  center: {lat:coord[center][0], lng:coord[center][1]},
+  zoom: 5,
+  pixelRatio: window.devicePixelRatio || 1
+});
+// add a resize listener to make sure that the map occupies the whole container
+window.addEventListener('resize', () => map.getViewPort().resize());
+
+//Step 3: make the map interactive
+// MapEvents enables the event system
+// Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+// Create the default UI components
+var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+
+// Now use the map as required...
+addPolylineToMap(map);
+addInfoBubble(map);
+
+</script>
+
 {% endblock body %}
