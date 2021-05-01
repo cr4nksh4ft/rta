@@ -7,7 +7,9 @@ import requests
 import pickle
 import json
 import flexpolyline as fp
+
 from .geo_dist import geo
+
 #import weather
 import json
 import random
@@ -64,6 +66,7 @@ def getAllData(segments):
         src="https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&alternatives=6&return=polyline,travelSummary&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk".format(w1coord,w2coord)
         data=requests.get(src)
         data=data.json()
+        print("data",data)
         segmentData[segment]=data
     #Serialize & store segmentData dict in file using pickle
     datafile=open('data.txt','wb')
@@ -113,6 +116,7 @@ def getDataFromFile():
         for idx,route in enumerate(datafile[key]['routes']):
             polyline=route['sections'][0]['polyline']
             duration=route['sections'][0]['travelSummary']['duration']
+            distance=route['sections'][0]['travelSummary']['length']
             '''
                 ADD ATTRIBUTE WEATHER, ACCIDENT_RECORD, elevation
                 weather ke liye call karna padega
@@ -125,8 +129,8 @@ def getDataFromFile():
             s_coord=(sourceL['lat'],sourceL['lng'])
             d_coord=(destL['lat'],destL['lng'])
             #weather,traction,accidentHistory = getCriticalData(s_coord,d_coord)
-            accidentScore = getCriticalData(s_coord,d_coord)
-            segment_pool[key].append((idx,polyline,duration,accidentScore))
+            #accidentScore = getCriticalData(s_coord,d_coord)
+            segment_pool[key].append((idx,polyline,duration,distance))
             print("\n")
     return segment_pool
 
@@ -163,13 +167,13 @@ def calcFitness(population,flag=False):
             end=len(chromosome)-1
         else:
             end=len(chromosome)
-        total_acc_score=0
+        total_dist=0
         for gene in chromosome[0:end]:
-            total_acc_score+=gene[-1]
+            total_dist+=gene[-1]
         if(flag):
-            chromosome[-1]=total_acc_score
+            chromosome[-1]=total_dist
         else:
-            chromosome.append(total_acc_score)
+            chromosome.append(total_dist)
     return population
 
 def selectFittest(population, percent=50):
