@@ -18,7 +18,7 @@ def gatherData(waypoints):
         try:
             lat_lng_1=coord_dict[waypoint1][0]+","+coord_dict[waypoint1][1]
             lat_lng_2=coord_dict[waypoint2][0]+","+coord_dict[waypoint2][1]
-            src = "https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&routingMode=short&return=polyline,travelSummary&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk".format(lat_lng_1, lat_lng_2)
+            src = "https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&routingMode=short&return=polyline,travelSummary&apiKey=apikey".format(lat_lng_1, lat_lng_2)
             route = requests.get(src)
             route = route.json()
 

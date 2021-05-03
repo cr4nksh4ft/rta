@@ -1,7 +1,7 @@
 """
 API KEY for Distance Matrix
 
-https://apis.mapmyindia.com/advancedmaps/v1/y5w387fmwteirguostpbiyrfhywxwe1v/distance_matrix/driving/12.120000,76.680000;24.879999,74.629997?rtype=0
+https://apis.mapmyindia.com/advancedmaps/v1/apikey/distance_matrix/driving/12.120000,76.680000;24.879999,74.629997?rtype=0
 
 
 """
@@ -11,7 +11,7 @@ import requests
 def waypointGeo(waypoints):
 	coord_dict = {}
 	a1="https://geocode.search.hereapi.com/v1/geocode?q="
-	a3="&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk"
+	a3="&apiKey=apikey"
 	for waypoint in waypoints:
 		res_geo = requests.get(a1+waypoint+a3)
 		data_geo = res_geo.json()
@@ -21,7 +21,7 @@ def waypointGeo(waypoints):
 
 def geo(src,dest):
 	a1="https://geocode.search.hereapi.com/v1/geocode?q="
-	a3="&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk"
+	a3="&apiKey=apikey"
 	res_geo1,res_geo2=requests.get(a1+src+a3),requests.get(a1+dest+a3)
 
 
@@ -45,7 +45,7 @@ def geo(src,dest):
 
 def latlong (src):
 	a1="https://geocode.search.hereapi.com/v1/geocode?q="
-	a3="&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk"
+	a3="&apiKey=apikey"
 	res_geo1=requests.get(a1+src+a3)
 	data_geo1=res_geo1.json()
 	lat1=data_geo1['items'][0]['position']
@@ -54,7 +54,7 @@ def latlong (src):
 
 def getDist(s,d):
 
-	s1= "https://apis.mapmyindia.com/advancedmaps/v1/4b289edc1a9dc6abb88731a74f18c1fa/distance_matrix/driving/"
+	s1= "https://apis.mapmyindia.com/advancedmaps/v1/apikey/distance_matrix/driving/"
 	s_coord,d_coord = geo(s,d)
 	#api_address =s1+str(s_coord[0])+','+str(s_coord[1])+';'+str(d_coord[0])+','+str(d_coord[1])+'?rtype=1&region=ind'
 	api_address=s1+"{},{};{},{}?rtype=1&region=ind".format(str(s_coord[0]),str(s_coord[1]),str(d_coord[0]),str(d_coord[1]))
@@ -71,7 +71,7 @@ def weather(city):
     try:
         a1="http://api.openweathermap.org/data/2.5/weather?units=metric"
         a2 = "&q=" + city
-        a3 = "&appid=c6e315d09197cec231495138183954bd"
+        a3 = "&appid=apikey"
         api_address =  a1 + a2  + a3
         res = requests.get(api_address)
         #print(res)

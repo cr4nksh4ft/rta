@@ -14,7 +14,7 @@ from .geo_dist import geo
 import json
 import random
 from operator import itemgetter
-#src='https://router.hereapi.com/v8/routes?transportMode=car&origin=19.131577,72.891418&destination=18.519479,73.870703&alternatives=6&return=polyline,summary&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk'
+#src='https://router.hereapi.com/v8/routes?transportMode=car&origin=19.131577,72.891418&destination=18.519479,73.870703&alternatives=6&return=polyline,summary&apiKey=apikey'
 def getUserInput():
     '''
     ACCEPT WAYPOINTS FROM USER
@@ -63,7 +63,7 @@ def getAllData(segments):
 
         w1coord=str(coord[0][0])+","+str(coord[0][1])
         w2coord=str(coord[1][0])+","+str(coord[1][1])
-        src="https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&alternatives=6&return=polyline,travelSummary&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk".format(w1coord,w2coord)
+        src="https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&alternatives=6&return=polyline,travelSummary&apiKey=apikey".format(w1coord,w2coord)
         data=requests.get(src)
         data=data.json()
         #print("data",data)
