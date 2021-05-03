@@ -1,8 +1,157 @@
 {% extends 'base.html' %}
-{% block title %}
-Input Page
-{% endblock title %}
+{% load static %}
+
+{% block head %}
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'images_p/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor_p/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'fonts_p/font-awesome-4.7.0/css/font-awesome.min.css' %}"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'fonts_p/iconic/css/material-design-iconic-font.min.css' %}"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor_p/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor_p/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor_p/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor_p/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'vendor_p/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util_p.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main_rp.css' %}">
+<!--===============================================================================================-->
+
+{% endblock head %}
+
+
 {% block body %}
+
+<div class="limiter">
+		<div class="container-login100" style="background-image: url({% static 'images_p/bg-01.jpg' %});">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form class="login100-form validate-form input_form" id="input_form" method="POST">
+                    {% csrf_token %}
+					<span class="login100-form-title p-b-49">
+						Input Page
+					</span>
+
+					<div class="m-b-23" >
+						<h3>Type Of Route</h3>
+						<br>
+						<input type="radio" id="hamilton" name="type" value="hamilton">
+						<label for="hamilton">Hamiltonion Route</label>
+						<br>
+						<input type="radio" id="short" name="type" value="short">
+						<label for="short">Shortest Route</label>
+						<br>
+						<input type="radio" id="safe" name="type" value="safe">
+						<label for="safe">Safest Route</label>
+						<br>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-23">
+						<span class="label-input100">Source</span>
+						<input class="input100" id="source" type="text" name="source" placeholder="Source">
+						<span class="focus-input100" ></span>
+					</div>
+
+          <div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" value="Create Destination" onclick="createNewElement();" type="button" >
+								Create Destination
+							</button>
+						</div>
+					</div>
+
+
+
+					<div class="wrap-input100 validate-input mb-5 " id="7" data-validate="Password is required" style="display: none ;">
+						<span class="label-input100">Destination</span>
+						<input class="input100" id='1' name='1' type="text" placeholder="Destination">
+						<span class="focus-input100" ></span>
+					</div>
+
+          <div class="wrap-input100 validate-input mb-5 " id="8" data-validate="Password is required" style="display: none ;">
+						<span class="label-input100">Destination</span>
+						<input class="input100" id='2' name='2' type="text" placeholder="Destination">
+						<span class="focus-input100" ></span>
+					</div>
+          <div class="wrap-input100 validate-input mb-5" id="9"  data-validate="Password is required" style="display: none ;">
+						<span class="label-input100">Destination</span>
+						<input class="input100" id='3' name='3' type="text" placeholder="Destination">
+						<span class="focus-input100" ></span>
+					</div>
+          <div class="wrap-input100 validate-input mb-5 " id="10" data-validate="Password is required" style="display: none ;">
+						<span class="label-input100">Destination</span>
+						<input class="input100" id='4' name='4' type="text" placeholder="Destination">
+						<span class="focus-input100" ></span>
+					</div>
+          <div class="wrap-input100 validate-input mb-5 " id="11" data-validate="Password is required" style="display: none ;">
+						<span class="label-input100">Destination</span>
+						<input class="input100" id='5' name='5' type="text" placeholder="Destination">
+						<span class="focus-input100" ></span>
+					</div>
+
+
+          <script type="text/JavaScript">
+  var count=0
+  var count_div= 6
+function createNewElement() {
+count=count+1
+count_div = count_div+1
+var x = document.getElementById(count);
+var y = document.getElementById(count_div);
+x.style.display = "block";
+y.style.display = "block";
+
+
+document.getElementById('input_form').action = 'input_form/count='+count;
+}
+
+</script>
+
+
+					<div class="container-login100-form-btn p-4">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" form="input_form" id="submit" type="submit">
+								Submit
+							</button>
+						</div>
+					</div>
+
+
+
+
+
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+
+
+
+
+
+
+<!-- <script>
+    alert('{{ message }}');
+</script>
+
+
 <h1>Input Page</h1>
 <form class="input_form" action="input_form" method="post" id="input_form">
   {% csrf_token %}
@@ -10,6 +159,7 @@ Input Page
 <label for="exampleFormControlInput1" class="form-label">Source:</label>
 <input type="text" name="source" class="form-control" id="source" placeholder="Source">
 </div>
+
 <div id="mb-3">
 <p>
 <input type="button" value="Create Destination" onclick="createNewElement();"/>
@@ -31,14 +181,7 @@ Input Page
   var count=0
 function createNewElement() {
 count=count+1
-// First create a DIV element.
-//var txtNewInputBox = document.createElement('div');
 
-// Then add the content (a new input box) of the element.
-//txtNewInputBox.innerHTML = "<p><input type='text' class='form-control' id='des' placeholder='Destination'></p>";
-
-// Finally put it where it is supposed to appear.
-//document.body.appendChild(txtNewInputBox);
 var x = document.getElementById(count);;
 
 x.style.display = "block";
@@ -50,7 +193,6 @@ document.getElementById('input_form').action = 'input_form/count='+count;
 </script>
 <button type="submit" form="input_form" id="submit" value="Submit">Submit</button>
 
-
-</form>
+</form> -->
 
 {% endblock body %}

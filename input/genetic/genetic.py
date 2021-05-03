@@ -12,7 +12,7 @@ from .geo_dist import geo
 import json
 import random
 from operator import itemgetter
-#src='https://router.hereapi.com/v8/routes?transportMode=car&origin=19.131577,72.891418&destination=18.519479,73.870703&alternatives=6&return=polyline,summary&apiKey=EXAP6TZ6aJvbjKWMA3WJG7O9mME0ZqpDa5e6bQhI1rg'
+#src='https://router.hereapi.com/v8/routes?transportMode=car&origin=19.131577,72.891418&destination=18.519479,73.870703&alternatives=6&return=polyline,summary&apiKey=apikey'
 def getUserInput():
     '''
     ACCEPT WAYPOINTS FROM USER
@@ -31,7 +31,7 @@ def getUserInput():
         waypoints.append(waypoint)
     #CREATE AND POPULATE THE LIST
     segments=[(waypoints[i],waypoints[i+1]) for i in range(len(waypoints)-1)]
-    print("SEGMENTS",segments,sep="=>")
+    #print("SEGMENTS",segments,sep="=>")
     #RETURN LIST OF FORMED SEGMENTS
     return segments
 
@@ -52,14 +52,16 @@ def getAllData(segments):
     segmentData={}
     for segment in segments:
         coord=None
-        while(coord==None):
+
+        while (coord==None):
             try:
                 coord=geo(*segment)
             except:
                 pass
-        w1coord=str(coord[0][1])+","+str(coord[0][0])
-        w2coord=str(coord[1][1])+","+str(coord[1][0])
-        src="https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&alternatives=6&return=polyline,travelSummary&apiKey=EXAP6TZ6aJvbjKWMA3WJG7O9mME0ZqpDa5e6bQhI1rg".format(w1coord,w2coord)
+
+        w1coord=str(coord[0][0])+","+str(coord[0][1])
+        w2coord=str(coord[1][0])+","+str(coord[1][1])
+        src="https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&alternatives=6&return=polyline,travelSummary&apiKey=apikey".format(w1coord,w2coord)
         data=requests.get(src)
         data=data.json()
         segmentData[segment]=data
@@ -215,23 +217,7 @@ def getFinalRoutes(waypoint,gen_count=10):
         flag=True
     return sorted(population,key = itemgetter(-1))
 
-def main():
-    segs=getUserInput()
-    getAllData(segs)
-    pool=getDataFromFile()
-    population=[]
-    flag=False
-    #PRODUCE 10 GENERATIONS
-    for i in range(10):
-        if(i==0):
-            population = generatePopulation(pool,loop=10)
-        popu_with_fitness = calcFitness(population,flag)
-        fittest_routes = selectFittest(popu_with_fitness)
-        population=crossover(fittest_routes)
-        flag=True
-    solution_file=open('solution.txt','wb')
-    pickle.dump(population,solution_file)
-    solution_file.close()
+
 
 def getAllCoordinates(waypoint,gen_count=10):
     '''
