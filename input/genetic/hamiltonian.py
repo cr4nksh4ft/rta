@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import random
 from itertools import combinations
-from geo_dist import waypointGeo
+from .geo_dist import waypointGeo
 import requests
 import flexpolyline as fp
 
@@ -217,7 +217,7 @@ def getHamiltonian(all_waypoints):
     total_distance=0
     total_duration=0
     all_coordinates=[]
-    
+
     polyline_dict = gatherData(all_waypoints)
     all_waypoints,waypoint_distances,waypoint_durations = readData()
     seq = run_genetic_algorithm(all_waypoints,waypoint_distances,generations=500, population_size=20)
@@ -227,14 +227,14 @@ def getHamiltonian(all_waypoints):
         total_distance += waypoint_distances[frozenset([seq[i], seq[i+1]])]
         total_duration += waypoint_durations[frozenset([seq[i], seq[i+1]])]
 
-    
-    all_coordinates.append(fp.decode(complete_polyline))
-    
-    return all_coordinates,total_distance,total_duration,seq
+
+    all_coordinates.extend(fp.decode(complete_polyline))
+    #return total_distance,total_duration,seq
+    return all_coordinates
 
 
 '''
 USE THIS FOR TESTING
-'''
-print(getHamiltonian(["Mumbai","Delhi","Agra","Nagpur","Pune","Kalyan"]))
 
+print(getHamiltonian(["Mumbai","Delhi","Agra","Nagpur","Pune","Kalyan"]))
+'''

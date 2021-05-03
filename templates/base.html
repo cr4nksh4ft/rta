@@ -32,23 +32,23 @@
         {% if user.is_authenticated %}
         <li><a href="{% url 'user_logout' %}" class="nav-link px-2 text-white">Logout</a></li>
         <li><a href="{% url 'input' %}" class="nav-link px-2 text-white">Input</a></li>
-        
-        
+
+
         {% else %}
         <li><a href="{% url 'user_login' %}"class="nav-link px-2 text-white" >LogIn</a></li>
         <li><a href="{% url 'user_signup' %}" class="nav-link px-2 text-white">SignUp</a></li>
         <li><a href="{% url 'user_rp' %}" class="nav-link px-2 text-white">Reset Password</a></li>
         {% endif %}
-        
-        
-        
+
+
+
       </ul>
 
 
       <div class="text-end float-right">
-        
-        
-        
+
+
+
       </div>
     </div>
   </div>
@@ -67,13 +67,14 @@
                         {% if user.is_authenticated %}
                         <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_logout' %}">Logout</a></li>
                         <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'input' %}">Input</a></li>
+                        <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_cp' %}">Change Password</a></li>
                         {% else %}
-                        
+
                         <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_login' %}">Login</a></li>
                         <li class="nav-item pr-3"><a class="nav-link js-scroll-trigger" href="{% url 'user_signup' %}">Signup</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_rp' %}">Reset Password</a></li>
                         {% endif %}
-                    
+
                       </ul>
                 </div>
             </div>

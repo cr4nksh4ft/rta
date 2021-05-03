@@ -68,31 +68,32 @@ def getDist(s,d):
 #Import this file
 #Call this function in your py file
 def weather(city):
-        try:
-                socket.create_connection( ("www.google.com", 80))
-                a1="http://api.openweathermap.org/data/2.5/weather?units=metric"
-                a2 = "&q=" + city
-                a3 = "&appid=c6e315d09197cec231495138183954bd"
-                api_address =  a1 + a2  + a3
-                res = requests.get(api_address)
-                #print(res)
-                data=res.json()
-                #print(data)
-                pressure=data['main']['pressure']
-                a="Pressure: "+str(pressure)
-                visibility = data['visibility']
-                b=" Visibility: "+str(visibility)
-                wind = data['wind']['speed']
-                c=" Wind Speed : "+str(wind)
-                weather = data['weather']
-                weather_main = weather[0]
-                d=" Weather Description: "+str(weather_main['description'])
-                final=a+b+c+d
-                return (final)
-        except OSError as e:
-                return (e)
-        except KeyError as e1:
-                print("Check city name ",e1)
+    try:
+        a1="http://api.openweathermap.org/data/2.5/weather?units=metric"
+        a2 = "&q=" + city
+        a3 = "&appid=c6e315d09197cec231495138183954bd"
+        api_address =  a1 + a2  + a3
+        res = requests.get(api_address)
+        #print(res)
+        data=res.json()
+        #print(data)
+        temp=data['main']['temp']
+        a="\n Temperature: "+str(temp)
+        pressure=data['main']['pressure']
+        a="\nPressure: "+str(pressure)
+        visibility = data['visibility']
+        b="\nVisibility: "+str(visibility)
+        wind = data['wind']['speed']
+        c="\n Wind Speed : "+str(wind)
+        weather = data['weather']
+        weather_main = weather[0]
+        d="\n Weather Description: "+str(weather_main['description'])
+        final=a+b+c+d
+        return (final)
+    except OSError as e:
+        return (e)
+    except KeyError as e1:
+        print("Check city name ",e1)
 
 def calcDist(src_name,dest_name):
 	distance=getDist(src_name,dest_name)

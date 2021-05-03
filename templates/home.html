@@ -31,12 +31,13 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Contact</a></li>
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_logout' %}">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_cp' %}">Change Password</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'input' %}">Input</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_rp' %}">Reset Password</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_login' %}">Login</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'user_signup' %}">Signup</a></li>
-                        
+
                         {% endif %}
                     </ul>
                 </div>
@@ -46,11 +47,11 @@
         <header class="masthead">
             <div class="container d-flex h-100 align-items-center">
                 <div class="mx-auto text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">RTA</h1>        
+                    <h1 class="mx-auto my-0 text-uppercase">RTA</h1>
                     {% if user.is_authenticated %}
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Hello {{ user.username }}.</h2>
                     {% endif %}
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Dare to live the life you’ve always wanted.</h2>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Turn your road trip into an adventure.</h2>
                 </div>
             </div>
         </header>
@@ -63,7 +64,6 @@
                         <p class="text-white-50">
                             This project focuses on genetic algorithm which has an excellent Global search capability with trip-generation forecasting model in order to achieve the purpose of improving the accuracy of prediction.
                             The proposed system should satisfy the path constraints which should meet the drivers' preferences as well as the alternative path constraints and limit the joint failure probability for candidate paths.
-
                         </p>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             </div>
         </section>
         <!-- Projects-->
-        
+
         <!-- Signup-->
         <section class="signup-section" id="signup">
             <div class="container">
@@ -107,7 +107,7 @@
                                 <i class="fas fa-envelope text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Email</h4>
                                 <hr class="my-4" />
-                                <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                                <div class="small text-black-50"><a href="mailto:abhishek3yadav3@gmail.com">abhishek3yadav3@gmail.com</a></div>
                             </div>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                                 <i class="fas fa-mobile-alt text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Phone</h4>
                                 <hr class="my-4" />
-                                <div class="small text-black-50">+91 1231312222</div>
+                                <div class="small text-black-50"><a href="tel:9702858226">+91 9702858226</a></div>
                             </div>
                         </div>
                     </div>

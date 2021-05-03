@@ -31,7 +31,7 @@ def getUserInput():
         waypoints.append(waypoint)
     #CREATE AND POPULATE THE LIST
     segments=[(waypoints[i],waypoints[i+1]) for i in range(len(waypoints)-1)]
-    print("SEGMENTS",segments,sep="=>")
+    #print("SEGMENTS",segments,sep="=>")
     #RETURN LIST OF FORMED SEGMENTS
     return segments
 
@@ -217,23 +217,7 @@ def getFinalRoutes(waypoint,gen_count=10):
         flag=True
     return sorted(population,key = itemgetter(-1))
 
-def main():
-    segs=getUserInput()
-    getAllData(segs)
-    pool=getDataFromFile()
-    population=[]
-    flag=False
-    #PRODUCE 10 GENERATIONS
-    for i in range(10):
-        if(i==0):
-            population = generatePopulation(pool,loop=10)
-        popu_with_fitness = calcFitness(population,flag)
-        fittest_routes = selectFittest(popu_with_fitness)
-        population=crossover(fittest_routes)
-        flag=True
-    solution_file=open('solution.txt','wb')
-    pickle.dump(population,solution_file)
-    solution_file.close()
+
 
 def getAllCoordinates(waypoint,gen_count=10):
     '''

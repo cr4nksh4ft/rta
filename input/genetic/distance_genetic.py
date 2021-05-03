@@ -33,7 +33,7 @@ def getUserInput():
         waypoints.append(waypoint)
     #CREATE AND POPULATE THE LIST
     segments=[(waypoints[i],waypoints[i+1]) for i in range(len(waypoints)-1)]
-    print("SEGMENTS",segments,sep="=>")
+    #print("SEGMENTS",segments,sep="=>")
     #RETURN LIST OF FORMED SEGMENTS
     return segments
 
@@ -66,7 +66,7 @@ def getAllData(segments):
         src="https://router.hereapi.com/v8/routes?transportMode=car&origin={}&destination={}&alternatives=6&return=polyline,travelSummary&apiKey=t0a0rc7zIq7H_R53AXFFs0B3L4QNsMTa9p_TW7MrKnk".format(w1coord,w2coord)
         data=requests.get(src)
         data=data.json()
-        print("data",data)
+        #print("data",data)
         segmentData[segment]=data
     #Serialize & store segmentData dict in file using pickle
     datafile=open('data.txt','wb')

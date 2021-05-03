@@ -8,11 +8,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
 from django.utils.datastructures import MultiValueDictKeyError
-from .genetic.genetic import *
+from .genetic.genetic import getAllCoordinates as safest
+from .genetic.distance_genetic import getAllCoordinates as shortest
+from .genetic.hamiltonian import getHamiltonian as hamiltonian
 from .genetic.geo_dist import weather,latlong
 import simplejson
 
 def index(request):
+    context={ 'message':'Enter Atleast 1 Destination'}
     return render(request,'index.html')
 
 def error (request):
@@ -29,10 +32,23 @@ def input_form (request,count):
         except MultiValueDictKeyError:
             waypoint.append(None)
 
+    #Getting radio button Info
+    radio = str(request.POST.get('type'))
+    op=[]
+    #CHeck import to see names of the functions
+    if radio=='safe':
+        pathType= 'Safest'
+        op=safest(waypoint)
+    elif radio=='short':
+        pathType= 'Shortest'
+        op=shortest(waypoint)
+    elif radio=='hamilton':
+        pathType='Hamiltonian'
+        op=hamiltonian(waypoint)
+    else :
+        pathType= 'Shortest'
+        op=shortest(waypoint)
 
-    op=genetic.getAllCoordinates(waypoint)
-    
-    dict ={}
     for i in range(len(op)):
         op[i]=list(op[i])
         # weather Part
@@ -40,7 +56,10 @@ def input_form (request,count):
     for x in waypoint:
         weathe.append(weather(str(x)))
     for i in range(len(waypoint)):
-        weathe[i]=str(waypoint[i])+"→"+weathe[i]
+        try:
+            weathe[i]=str(waypoint[i])+"→"+weathe[i]
+        except Exception as e:
+            weathe[i]=str(waypoint[i])+"→"+"Not Available"
     #op is ouyput of all polyline coordinates
     op=simplejson.dumps(op)
     #storing coordinates of all waypoints in waycoord
@@ -48,7 +67,10 @@ def input_form (request,count):
     for z in waypoint:
         waycoord.append(latlong(str(z)))
     waycoord=simplejson.dumps(waycoord)
-    context={'coord':op, 'waypoint':waypoint,'weather':weathe,'waycoord':waycoord}
+
+    message= 'Enter Atleast 1 Destination'
+
+    context={'coord':op, 'waypoint':waypoint,'weather':weathe,'waycoord':waycoord,'pathType':pathType, 'message':message}
     return render(request, 'output.html' , context)
 
 
